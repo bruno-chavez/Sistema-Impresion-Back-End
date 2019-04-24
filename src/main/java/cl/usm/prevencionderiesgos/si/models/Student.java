@@ -10,6 +10,7 @@ public class Student {
     @Id
     @GeneratedValue
     private Integer id;
+    private String name;
     private String email;
     private String password;
     private String type;
@@ -21,6 +22,14 @@ public class Student {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
