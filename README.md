@@ -1,4 +1,4 @@
-# Ejecutar proyecto
+# Antes de Iniciar
 
 + Tener PostgreSQL instalado
 
@@ -9,3 +9,8 @@
 
 + Crear base de datos con nombre `si`, 
 solo es necesario crear la base de datos, las tablas se autogeneran
+
+# Ejecucion
+
++ Ejecutar back-end
++ Ejectuar front-end
