@@ -6,6 +6,12 @@ import javax.persistence.Id;
 
 @Entity
 public class Admin {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String email;
+    private String password;
+
     public Integer getId() {
         return id;
     }
@@ -29,10 +35,4 @@ public class Admin {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @Id
-    @GeneratedValue
-    private Integer id;
-    private String email;
-    private String password;
 }
