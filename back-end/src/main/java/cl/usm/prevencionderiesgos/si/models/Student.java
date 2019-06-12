@@ -1,8 +1,6 @@
 package cl.usm.prevencionderiesgos.si.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Student {
@@ -13,8 +11,10 @@ public class Student {
     private String name;
     private String email;
     private String password;
-    private String type;
     private Integer used;
+
+    @Enumerated(EnumType.STRING)
+    private StudentType type;
 
     public Integer getId() {
         return id;
@@ -48,11 +48,11 @@ public class Student {
         this.password = password;
     }
 
-    public String getType() {
+    public StudentType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(StudentType type) {
         this.type = type;
     }
 
