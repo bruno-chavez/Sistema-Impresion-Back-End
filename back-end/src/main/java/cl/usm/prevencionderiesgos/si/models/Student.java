@@ -9,9 +9,11 @@ public class Student {
     @GeneratedValue
     private Integer id;
     private String name;
-    private String email;
     private String password;
     private Integer used;
+
+    @Column(unique = true)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private StudentType type;
