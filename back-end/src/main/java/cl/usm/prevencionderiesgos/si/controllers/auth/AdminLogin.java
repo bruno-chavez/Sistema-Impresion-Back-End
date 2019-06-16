@@ -15,7 +15,7 @@ public class AdminLogin {
     }
 
     @PostMapping
-    Admin create(@RequestBody Admin admin) {
+    Admin PostAdminLogin(@RequestBody Admin admin) {
         return repository.save(admin);
     }
 }

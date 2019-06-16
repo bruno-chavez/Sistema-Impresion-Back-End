@@ -21,7 +21,7 @@ public class Register {
 
 
     @PostMapping
-    Student RegisterUser(@RequestBody Student student) {
+    Student PostRegister(@RequestBody Student student) {
 
         student.setPassword(passwordEncoder.encode(student.getPassword()));
 

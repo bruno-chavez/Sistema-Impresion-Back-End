@@ -20,7 +20,7 @@ public class StudentLogin {
 
 
     @PostMapping
-    Boolean LoginUser(@RequestBody Student student) {
+    Boolean PostStudentLogin(@RequestBody Student student) {
         return passwordEncoder.matches(student.getPassword(), repository.findByEmail(student.getEmail()).getPassword());
     }
 }
