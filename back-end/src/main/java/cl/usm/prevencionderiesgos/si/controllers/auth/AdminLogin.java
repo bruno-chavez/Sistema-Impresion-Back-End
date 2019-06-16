@@ -2,12 +2,10 @@ package cl.usm.prevencionderiesgos.si.controllers.auth;
 
 import cl.usm.prevencionderiesgos.si.models.Admin;
 import cl.usm.prevencionderiesgos.si.repositories.AdminRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/admin")
 public class AdminLogin {
     private final AdminRepository repository;
