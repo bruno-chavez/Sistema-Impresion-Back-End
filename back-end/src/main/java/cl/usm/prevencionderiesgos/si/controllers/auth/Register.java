@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
-@RequestMapping("/register")
+@RequestMapping("/auth/register")
 public class Register {
 
     private final StudentRepository repository;

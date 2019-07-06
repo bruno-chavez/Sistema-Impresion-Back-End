@@ -4,9 +4,12 @@ import cl.usm.prevencionderiesgos.si.models.Admin;
 import cl.usm.prevencionderiesgos.si.repositories.AdminRepository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
-@RequestMapping("/admin")
+@RequestMapping("/auth/admin")
 public class AdminLogin {
     private final AdminRepository repository;
 
@@ -15,7 +18,11 @@ public class AdminLogin {
     }
 
     @PostMapping
-    Admin PostAdminLogin(@RequestBody Admin admin) {
+    Admin PostAdminLogin(@RequestBody Admin admin, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("student-email", admin.getEmail());
+
         return repository.save(admin);
     }
 }
