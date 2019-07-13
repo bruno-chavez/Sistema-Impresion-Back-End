@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/auth/admin")
 public class AdminLogin {
     private final AdminRepository repository;
