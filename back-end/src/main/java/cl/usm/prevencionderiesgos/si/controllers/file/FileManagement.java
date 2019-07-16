@@ -1,9 +1,12 @@
 package cl.usm.prevencionderiesgos.si.controllers.file;
 
 import cl.usm.prevencionderiesgos.si.models.PDF;
+import cl.usm.prevencionderiesgos.si.models.Student;
 import cl.usm.prevencionderiesgos.si.repositories.PDFRepository;
 import cl.usm.prevencionderiesgos.si.repositories.StudentRepository;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
+
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -30,11 +33,11 @@ public class FileManagement {
     }
 
 
-    /*@GetMapping
-    public ResponseEntity<InputStreamResource> loadFile() {
+    @GetMapping
+    public ResponseEntity<InputStreamResource> CheckFiles() {
         try {
 
-            PDF pdf = pdfRepository.findById(36);
+            PDF pdf = pdfRepository.findById(68);
 
             try (FileOutputStream fos = new FileOutputStream("pdf.pdf")) {
                 fos.write(pdf.getFile());
@@ -54,29 +57,36 @@ public class FileManagement {
             e.printStackTrace();
             return null;
         }
-    }*/
+    }
 
     @PostMapping
-    public String saveFile(@RequestParam("file") MultipartFile file) {
+    public String saveFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 
-        /*HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         Object email = session.getAttribute("student-email");
 
         Student student = studentRepository.findByEmail(email.toString());
-        pdf.setStudent(student);*/
 
         try {
 
+            // Creates a file from the byte array request
             try (FileOutputStream fileStream = new FileOutputStream("pdf.pdf")) {
                 fileStream.write(file.getBytes());
             }
 
+            // Loads the created file to count the total of pages
             PDDocument doc = PDDocument.load(new File("pdf.pdf"));
             int pages = doc.getNumberOfPages();
 
+            // Adds the pages counted and saves it
+            student.setPages(student.getPages() + pages);
+            studentRepository.save(student);
+
+            // Generates a new PDF object and adds the properties from the request
             PDF pdf = new PDF();
+
             pdf.setFile(file.getBytes());
-            pdf.setPages(pages);
+            pdf.setStudent(student);
 
             pdfRepository.save(pdf);
             return "File saved successfully";
