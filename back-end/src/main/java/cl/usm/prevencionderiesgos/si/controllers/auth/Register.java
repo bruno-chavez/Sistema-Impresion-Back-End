@@ -13,16 +13,17 @@ public class Register {
     private final StudentRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    Register(StudentRepository repository, PasswordEncoder passwordEncoder) {
+    public Register(StudentRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
     }
 
 
     @PostMapping
-    String PostRegister(@RequestBody Student student) {
+    public String CreateUser(@RequestBody Student student) {
 
         student.setPassword(passwordEncoder.encode(student.getPassword()));
+        student.setPages(0);
 
         repository.save(student);
 

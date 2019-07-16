@@ -10,7 +10,7 @@ public class Student {
     private Integer id;
     private String name;
     private String password;
-    private Integer used;
+    private Integer pages;
 
     @Column(unique = true)
     private String email;
@@ -58,11 +58,11 @@ public class Student {
         this.type = type;
     }
 
-    public Integer getUsed() {
-        return used;
+    public Integer getPages() {
+        return pages;
     }
 
-    public void setUsed(Integer used) {
-        this.used = used;
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 }
