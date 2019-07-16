@@ -17,10 +17,10 @@ public class AdminLogin {
     }
 
     @PostMapping
-    Admin PostAdminLogin(@RequestBody Admin admin, HttpServletRequest request) {
+    public Admin CreateSession(@RequestBody Admin admin, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        session.setAttribute("student-email", admin.getEmail());
+        session.setAttribute("admin-email", admin.getEmail());
 
         return repository.save(admin);
     }
