@@ -23,12 +23,16 @@ public class StudentLogin {
 
 
     @PostMapping
-    Boolean PostStudentLogin(@RequestBody Student student, HttpServletRequest request, HttpServletResponse response) {
+    String PostStudentLogin(@RequestBody Student student, HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         session.setAttribute("student-email", student.getEmail());
 
-        return passwordEncoder.matches(student.getPassword(), repository.findByEmail(student.getEmail()).getPassword());
+        if (passwordEncoder.matches(student.getPassword(), repository.findByEmail(student.getEmail()).getPassword())) {
+            return "authenticated";
+        } else {
+            return "error";
+        }
     }
 
     // Temporal endpoint, used to check if sessions are created

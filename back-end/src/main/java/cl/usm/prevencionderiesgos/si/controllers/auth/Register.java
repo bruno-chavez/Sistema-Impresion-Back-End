@@ -20,10 +20,12 @@ public class Register {
 
 
     @PostMapping
-    Student PostRegister(@RequestBody Student student) {
+    String PostRegister(@RequestBody Student student) {
 
         student.setPassword(passwordEncoder.encode(student.getPassword()));
 
-        return repository.save(student);
+        repository.save(student);
+
+        return "created";
     }
 }
