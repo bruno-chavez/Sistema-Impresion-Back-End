@@ -4,9 +4,9 @@
         <label>
             <input
                     type="text"
-                    name="username"
-                    v-model="input.username"
-                    placeholder="Username"
+                    name="name"
+                    v-model="input.name"
+                    placeholder="Name"
                     required
             />
         </label>
@@ -28,6 +28,15 @@
                     required
             />
         </label>
+        <label>
+            <input
+                    type="text"
+                    name="type"
+                    v-model="input.type"
+                    placeholder="Type"
+                    required
+            />
+        </label>
         <button type="button" v-on:click="register()">Register</button>
     </div>
 </template>
@@ -42,19 +51,20 @@
     data() {
       return {
         input: {
-          username: '',
+          name: '',
           email: '',
-          password: ''
+          password: '',
+          type: ''
         }
       }
     },
     methods: {
       async register() {
         let res = await axios.post(`${this.backend}/auth/register`, this.input, {withCredentials: true});
-        if (res.data.message === 'created') {
+        if (res.data === 'created') {
           this.$router.push({name: 'login'})
         } else {
-          console.log(res.data.message)
+          console.log(res.data)
         }
       }
     }

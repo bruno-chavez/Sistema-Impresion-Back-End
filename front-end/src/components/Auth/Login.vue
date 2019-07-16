@@ -41,10 +41,11 @@
     methods: {
       async login () {
         let res = await axios.post(`${this.backend}/auth/login`, this.input, { withCredentials: true });
-        if (res.data.message === 'authenticated') {
-          this.$router.push({ name: 'search' })
+        if (res.data === 'authenticated') {
+          this.$router.push({ name: 'user' })
         } else {
-          console.log(res.data.message)
+          console.log(typeof res.data);
+          console.log(res.data)
         }
       }
     }
