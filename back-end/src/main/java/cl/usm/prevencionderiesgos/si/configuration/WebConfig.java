@@ -32,6 +32,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
         registry
                 .addMapping("/**")
                 .allowedOrigins("http://localhost:8081")
+                .allowedMethods("GET", "POST", "DELETE")
                 .allowCredentials(true);
     }
 
