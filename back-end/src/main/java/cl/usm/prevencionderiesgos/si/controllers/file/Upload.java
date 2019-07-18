@@ -1,5 +1,6 @@
 package cl.usm.prevencionderiesgos.si.controllers.file;
 
+import cl.usm.prevencionderiesgos.si.DTOs.Message;
 import cl.usm.prevencionderiesgos.si.models.PDF;
 import cl.usm.prevencionderiesgos.si.models.Student;
 import cl.usm.prevencionderiesgos.si.repositories.PDFRepository;
@@ -15,18 +16,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 
 @RestController
-@RequestMapping("/file")
-public class FileManagement {
+@RequestMapping("/file/upload")
+public class Upload {
 
     private final PDFRepository pdfRepository;
     private final StudentRepository studentRepository;
 
 
-    FileManagement(PDFRepository pdfRepository, StudentRepository studentRepository) {
+    Upload(PDFRepository pdfRepository, StudentRepository studentRepository) {
         this.pdfRepository = pdfRepository;
         this.studentRepository = studentRepository;
 
@@ -43,15 +45,17 @@ public class FileManagement {
                 fos.write(pdf.getFile());
             }
 
-            FileInputStream file = new FileInputStream("pdf.pdf");
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "inline; filename=pdf-test.pdf");
+            try (FileInputStream file = new FileInputStream("pdf.pdf")) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "inline; filename=pdf-test.pdf");
 
-            return ResponseEntity
-                    .ok()
-                    .headers(headers)
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(new InputStreamResource(file));
+                return ResponseEntity
+                        .ok()
+                        .headers(headers)
+                        .contentType(MediaType.APPLICATION_PDF)
+                        .body(new InputStreamResource(file));
+
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,14 +64,17 @@ public class FileManagement {
     }
 
     @PostMapping
-    public String saveFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-        Object email = session.getAttribute("student-email");
-
-        Student student = studentRepository.findByEmail(email.toString());
-
+    @ResponseBody
+    public Message saveFile(@RequestParam("file") MultipartFile file,
+                            HttpServletRequest request,
+                            HttpServletResponse response) {
         try {
+
+            // Gets current session
+            HttpSession session = request.getSession();
+            Object email = session.getAttribute("student-email");
+
+            Student student = studentRepository.findByEmail(email.toString());
 
             // Creates a file from the byte array request
             try (FileOutputStream fileStream = new FileOutputStream("pdf.pdf")) {
@@ -86,13 +93,17 @@ public class FileManagement {
             PDF pdf = new PDF();
 
             pdf.setFile(file.getBytes());
+            pdf.setTitle(file.getOriginalFilename());
             pdf.setStudent(student);
 
             pdfRepository.save(pdf);
-            return "File saved successfully";
+
+            response.setStatus(201);
+
+            return new Message("File saved successfully");
         } catch (Exception e) {
             e.printStackTrace();
-            return "Failed to save file";
+            return new Message("Failed to save file");
         }
     }
 }
