@@ -63,6 +63,20 @@ public class Upload {
         }
     }
 
+    // Generates a new PDF object and adds the properties from the request
+    private void saveInfo(byte[] file, String name, Student student, Integer pages) {
+
+        PDF pdf = new PDF();
+        pdf.setFile(file);
+        pdf.setTitle(name);
+        pdf.setStudent(student);
+        pdfRepository.save(pdf);
+
+        student.setPages(student.getPages() + pages);
+        studentRepository.save(student);
+
+    }
+
     @PostMapping
     @ResponseBody
     public Message saveFile(@RequestParam("file") MultipartFile file,
@@ -73,6 +87,7 @@ public class Upload {
             // Gets current session
             HttpSession session = request.getSession();
             Object email = session.getAttribute("student-email");
+            Object type = session.getAttribute("type");
 
             Student student = studentRepository.findByEmail(email.toString());
 
@@ -85,25 +100,35 @@ public class Upload {
             PDDocument doc = PDDocument.load(new File("pdf.pdf"));
             int pages = doc.getNumberOfPages();
 
-            // Adds the pages counted and saves it
-            student.setPages(student.getPages() + pages);
-            studentRepository.save(student);
+            if (type == "Regular") {
+                if (student.getPages() + pages < 250) {
 
-            // Generates a new PDF object and adds the properties from the request
-            PDF pdf = new PDF();
+                    saveInfo(file.getBytes(), file.getOriginalFilename(), student, pages);
 
-            pdf.setFile(file.getBytes());
-            pdf.setTitle(file.getOriginalFilename());
-            pdf.setStudent(student);
+                    response.setStatus(201);
 
-            pdfRepository.save(pdf);
+                    return new Message("File saved successfully");
+                } else {
+                    return new Message("Document exceeds file limit");
+                }
+            }
+            if (type == "Memorista") {
+                if (student.getPages() + pages < 300) {
 
-            response.setStatus(201);
+                    saveInfo(file.getBytes(), file.getOriginalFilename(), student, pages);
 
-            return new Message("File saved successfully");
+                    response.setStatus(201);
+
+                    return new Message("File saved successfully");
+                } else {
+                    return new Message("Document exceeds file limit");
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return new Message("Failed to save file");
+            return new Message("Failed to saveInfo file");
         }
+
+        return null;
     }
 }
