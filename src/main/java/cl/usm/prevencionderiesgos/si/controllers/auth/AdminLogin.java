@@ -1,5 +1,6 @@
 package cl.usm.prevencionderiesgos.si.controllers.auth;
 
+import cl.usm.prevencionderiesgos.si.DTOs.CreateSessionRequest;
 import cl.usm.prevencionderiesgos.si.DTOs.Message;
 import cl.usm.prevencionderiesgos.si.models.Admin;
 import cl.usm.prevencionderiesgos.si.repositories.AdminRepository;
@@ -25,12 +26,12 @@ public class AdminLogin {
 
     @PostMapping
     @ResponseBody
-    public Message CreateSession(@RequestBody Admin admin, HttpServletRequest request) {
+    public Message CreateSession(@RequestBody CreateSessionRequest requestBody, HttpServletRequest request) {
 
-        if (passwordEncoder.matches(admin.getPassword(), repository.findByEmail(admin.getEmail()).getPassword())){
+        if (passwordEncoder.matches(requestBody.getPassword(), repository.findByEmail(requestBody.getEmail()).getPassword())){
 
             HttpSession session = request.getSession();
-            session.setAttribute("admin-email", admin.getEmail());
+            session.setAttribute("admin-email", requestBody.getEmail());
 
             return new Message("Authenticated");
         } else {
