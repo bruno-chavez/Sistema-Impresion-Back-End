@@ -3,6 +3,7 @@ package cl.usm.prevencionderiesgos.si.controllers.auth;
 import cl.usm.prevencionderiesgos.si.DTOs.Message;
 import cl.usm.prevencionderiesgos.si.models.Student;
 import cl.usm.prevencionderiesgos.si.repositories.StudentRepository;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
