@@ -1,7 +1,10 @@
 package cl.usm.prevencionderiesgos.si.controllers.auth;
 
+import cl.usm.prevencionderiesgos.si.DTOs.Message;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +15,12 @@ import javax.servlet.http.HttpSession;
 public class Logout {
 
     @DeleteMapping
-    public String DeleteSession(HttpServletRequest request) {
+    @ResponseBody
+    public Message DeleteSession(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
 
-        return "Session deleted";
+        return new Message("Session deleted");
     }
 
 }

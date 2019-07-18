@@ -1,5 +1,6 @@
 package cl.usm.prevencionderiesgos.si.controllers.auth;
 
+import cl.usm.prevencionderiesgos.si.DTOs.Message;
 import cl.usm.prevencionderiesgos.si.models.Student;
 import cl.usm.prevencionderiesgos.si.repositories.StudentRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ public class StudentLogin {
     private final StudentRepository repository;
     private final PasswordEncoder passwordEncoder;
 
+
     StudentLogin(StudentRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
@@ -23,16 +25,19 @@ public class StudentLogin {
 
 
     @PostMapping
-    public String CreateSession(@RequestBody Student student, HttpServletRequest request, HttpServletResponse response) {
+    @ResponseBody
+    public Message CreateSession(@RequestBody Student student, HttpServletRequest request, HttpServletResponse response) {
 
         if (passwordEncoder.matches(student.getPassword(), repository.findByEmail(student.getEmail()).getPassword())) {
 
             HttpSession session = request.getSession();
+
+            session.setAttribute("type", "student");
             session.setAttribute("student-email", student.getEmail());
 
-            return "authenticated";
+            return new Message("Authenticated");
         } else {
-            return "error";
+            return new Message("Authentication failed");
         }
     }
 
