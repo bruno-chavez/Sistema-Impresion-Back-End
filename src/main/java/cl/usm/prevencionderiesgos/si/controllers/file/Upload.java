@@ -100,10 +100,19 @@ public class Upload {
             PDDocument doc = PDDocument.load(new File("pdf.pdf"));
             int pages = doc.getNumberOfPages();
 
-            if (type == "Regular") {
+            if (type.toString().equals("Regular")) {
                 if (student.getPages() + pages < 250) {
 
+                    System.out.println("entre");
                     saveInfo(file.getBytes(), file.getOriginalFilename(), student, pages);
+                 /*   PDF pdf = new PDF();
+                    pdf.setFile(file.getBytes());
+                    pdf.setTitle(file.getOriginalFilename());
+                    pdf.setStudent(student);
+                    pdfRepository.save(pdf);
+
+                    student.setPages(student.getPages() + pages);
+                    studentRepository.save(student);*/
 
                     response.setStatus(201);
 
@@ -112,13 +121,21 @@ public class Upload {
                     return new Message("Document exceeds file limit");
                 }
             }
-            if (type == "Memorista") {
+            if (type.toString().equals("Memorista")) {
                 if (student.getPages() + pages < 300) {
 
                     saveInfo(file.getBytes(), file.getOriginalFilename(), student, pages);
 
-                    response.setStatus(201);
+                   /* PDF pdf = new PDF();
+                    pdf.setFile(file.getBytes());
+                    pdf.setTitle(file.getOriginalFilename());
+                    pdf.setStudent(student);
+                    pdfRepository.save(pdf);
 
+                    student.setPages(student.getPages() + pages);
+                    studentRepository.save(student);*/
+
+                    response.setStatus(201);
                     return new Message("File saved successfully");
                 } else {
                     return new Message("Document exceeds file limit");
