@@ -2,9 +2,10 @@ HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+pdf.pdf
 
 ### Back-End Build ###
-back-end/target
+target
 
 ### STS ###
 .apt_generated
