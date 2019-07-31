@@ -2,7 +2,9 @@ HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
-pdf.pdf
+# PDFs
+
+files/
 
 ### Back-End Build ###
 target

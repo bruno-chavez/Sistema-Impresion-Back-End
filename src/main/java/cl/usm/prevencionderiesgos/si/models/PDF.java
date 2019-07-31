@@ -13,19 +13,13 @@ public class PDF {
     @GeneratedValue
     private Integer id;
 
-    @Type(type="org.hibernate.type.BinaryType")
-    private byte[] file;
+    private String title;
+    private Integer pages;
 
     @ManyToOne
     @JoinColumn
     private Student student;
 
-    private String title;
-
-
-    public byte[] getFile() { return file; }
-
-    public void setFile(byte[] file) { this.file = file; }
 
     public Integer getId() {
         return id;
@@ -42,4 +36,8 @@ public class PDF {
     public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }
+
+    public Integer getPages() { return pages; }
+
+    public void setPages(Integer pages) { this.pages = pages; }
 }
