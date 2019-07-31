@@ -2,7 +2,6 @@ package cl.usm.prevencionderiesgos.si.controllers.auth;
 
 import cl.usm.prevencionderiesgos.si.DTOs.CreateSessionRequest;
 import cl.usm.prevencionderiesgos.si.DTOs.Message;
-import cl.usm.prevencionderiesgos.si.models.Admin;
 import cl.usm.prevencionderiesgos.si.repositories.AdminRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
