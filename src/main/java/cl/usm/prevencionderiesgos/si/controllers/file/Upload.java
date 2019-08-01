@@ -38,15 +38,19 @@ public class Upload {
                             HttpServletRequest request,
                             HttpServletResponse response) {
 
-            // Gets current session
-            HttpSession session = request.getSession();
-            Object email = session.getAttribute("student-email");
+        // Gets current session
+        HttpSession session = request.getSession();
+        Object email = session.getAttribute("student-email");
 
-            Student student = studentRepository.findByEmail(email.toString());
+        Student student = studentRepository.findByEmail(email.toString());
 
-            // Creates the filePath for the new file in files/user-id/file-name
-            String filePath = String.join("/",
-                    "files", student.getId().toString());
+        // Check if the file was previously added by the student
+        if (pdfRepository.findByTitleAndStudentId(file.getOriginalFilename(), student.getId()) != null){
+            return new Message("File with same name already uploaded");
+        }
+
+        // Creates the filePath for the new file in files/user-id/file-name
+        String filePath = String.join("/", "files", student.getId().toString());
 
         try {
 
