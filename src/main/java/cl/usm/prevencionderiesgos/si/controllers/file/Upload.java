@@ -65,11 +65,11 @@ public class Upload {
                 fileStream.write(file.getBytes());
             }
 
-            // Loads the created file to count the total of pages
+            // Loads the created file to look up total pages
             PDDocument doc = PDDocument.load(new File(filePath));
             int pages = doc.getNumberOfPages();
 
-
+            // Creates a new PDF
             PDF pdf = new PDF();
             pdf.setTitle(file.getOriginalFilename());
             pdf.setStudent(student);

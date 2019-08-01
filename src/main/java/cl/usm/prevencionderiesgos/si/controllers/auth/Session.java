@@ -18,13 +18,12 @@ public class Session {
     @ResponseBody
     public Message CheckSession(HttpServletRequest request) {
 
-        HttpSession session = request.getSession();
-        Object type = session.getAttribute("type");
+        HttpSession session = request.getSession(false);
 
-        if (type == null) {
-            return new Message("false");
+        if (session != null) {
+            return new Message(session.getAttribute("type").toString());
         } else {
-            return new Message(type.toString());
+            return new Message("false");
         }
     }
 }

@@ -1,4 +1,4 @@
-package cl.usm.prevencionderiesgos.si.controllers.auth;
+package cl.usm.prevencionderiesgos.si.controllers.admin;
 
 import cl.usm.prevencionderiesgos.si.DTOs.Message;
 import cl.usm.prevencionderiesgos.si.models.Student;
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
-@RequestMapping("/auth/register")
-public class Register {
+@RequestMapping("/admin/register")
+public class RegisterUsers {
 
     private final StudentRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    public Register(StudentRepository repository, PasswordEncoder passwordEncoder) {
+    public RegisterUsers(StudentRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
     }

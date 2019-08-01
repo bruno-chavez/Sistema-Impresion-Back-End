@@ -1,4 +1,4 @@
-package cl.usm.prevencionderiesgos.si.controllers.auth;
+package cl.usm.prevencionderiesgos.si.controllers.student;
 
 import cl.usm.prevencionderiesgos.si.DTOs.CreateSessionRequest;
 import cl.usm.prevencionderiesgos.si.DTOs.Message;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/auth/login")
+@RequestMapping("/student/login")
 public class StudentLogin {
 
     private final StudentRepository repository;

@@ -1,36 +1,33 @@
-package cl.usm.prevencionderiesgos.si.controllers.auth;
+package cl.usm.prevencionderiesgos.si.controllers.admin;
 
 import cl.usm.prevencionderiesgos.si.DTOs.CreateSessionRequest;
 import cl.usm.prevencionderiesgos.si.DTOs.Message;
 import cl.usm.prevencionderiesgos.si.repositories.AdminRepository;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/auth/admin")
+@RequestMapping("/admin/login")
 public class AdminLogin {
 
     private final AdminRepository repository;
-    private final PasswordEncoder passwordEncoder;
 
 
-    AdminLogin(AdminRepository repository, PasswordEncoder passwordEncoder) {
+    AdminLogin(AdminRepository repository) {
         this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
     @ResponseBody
     public Message CreateSession(@RequestBody CreateSessionRequest requestBody, HttpServletRequest request) {
 
-        if (passwordEncoder.matches(requestBody.getPassword(), repository.findByEmail(requestBody.getEmail()).getPassword())){
+        if (requestBody.getPassword().equals(repository.findByEmail(requestBody.getEmail()).getPassword())){
 
             HttpSession session = request.getSession();
-            session.setAttribute("admin-email", requestBody.getEmail());
+            session.setAttribute("type", "admin");
 
             return new Message("Authenticated");
         } else {
