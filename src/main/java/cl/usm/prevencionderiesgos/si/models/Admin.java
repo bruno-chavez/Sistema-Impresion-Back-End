@@ -6,9 +6,11 @@ import javax.persistence.Id;
 
 @Entity
 public class Admin {
+
     @Id
     @GeneratedValue
     private Integer id;
+
     private String email;
     private String password;
 

@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 @EnableWebMvc
-public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer{
+public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

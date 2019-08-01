@@ -24,7 +24,7 @@ public class AdminLogin {
     @ResponseBody
     public Message CreateSession(@RequestBody CreateSessionRequest requestBody, HttpServletRequest request) {
 
-        if (requestBody.getPassword().equals(repository.findByEmail(requestBody.getEmail()).getPassword())){
+        if (requestBody.getPassword().equals(repository.findByEmail(requestBody.getEmail()).getPassword())) {
 
             HttpSession session = request.getSession();
             session.setAttribute("type", "admin");

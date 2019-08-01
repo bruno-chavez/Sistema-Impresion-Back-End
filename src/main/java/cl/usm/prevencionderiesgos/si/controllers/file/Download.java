@@ -78,9 +78,7 @@ public class Download {
             if (student.getPages() + pages < 250) {
                 return constructResponse(student, dbResult);
             }
-        }
-
-        else if (type.toString().equals("Memorista")) {
+        } else if (type.toString().equals("Memorista")) {
             if (student.getPages() + pages < 300) {
                 return constructResponse(student, dbResult);
             }

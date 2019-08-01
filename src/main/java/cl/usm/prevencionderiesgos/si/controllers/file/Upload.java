@@ -45,7 +45,7 @@ public class Upload {
         Student student = studentRepository.findByEmail(email.toString());
 
         // Check if the file was previously added by the student
-        if (pdfRepository.findByTitleAndStudentId(file.getOriginalFilename(), student.getId()) != null){
+        if (pdfRepository.findByTitleAndStudentId(file.getOriginalFilename(), student.getId()) != null) {
             return new Message("File with same name already uploaded");
         }
 

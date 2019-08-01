@@ -29,7 +29,7 @@ public class ResetPages {
 
             // Changes all the students pages to 0, used with caution!
             Iterable<Student> students = studentRepository.findAll();
-            for (Student student: students) {
+            for (Student student : students) {
                 student.setPages(0);
                 studentRepository.save(student);
             }
