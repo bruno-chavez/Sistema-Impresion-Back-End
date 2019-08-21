@@ -23,7 +23,7 @@ public class Session {
         if (session != null) {
             return new Message(session.getAttribute("type").toString());
         } else {
-            return new Message("false");
+            return new Message("none");
         }
     }
 }

@@ -19,13 +19,13 @@ import java.io.FileInputStream;
 
 @RestController
 @RequestMapping("/file/download/{title}")
-public class Download {
+public class Show {
 
     private final PDFRepository pdfRepository;
     private final StudentRepository studentRepository;
 
 
-    Download(PDFRepository pdfRepository, StudentRepository studentRepository) {
+    Show(PDFRepository pdfRepository, StudentRepository studentRepository) {
         this.pdfRepository = pdfRepository;
         this.studentRepository = studentRepository;
 
