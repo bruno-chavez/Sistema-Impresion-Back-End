@@ -18,7 +18,7 @@ import java.io.FileInputStream;
 
 
 @RestController
-@RequestMapping("/file/download/{title}")
+@RequestMapping("/file/fetch/{action}/{title}")
 public class Show {
 
     private final PDFRepository pdfRepository;
@@ -31,11 +31,12 @@ public class Show {
 
     }
 
-    private ResponseEntity<InputStreamResource> constructResponse(Student student, PDF pdf) {
+    private ResponseEntity<InputStreamResource> constructResponse(Student student, PDF pdf, String action) {
 
-        student.setPages(student.getPages() + pdf.getPages());
-        studentRepository.save(student);
-
+        if (action.equals("print")) {
+            student.setPages(student.getPages() + pdf.getPages());
+            studentRepository.save(student);
+        }
 
         String filePath = String.join("/",
                 "files", student.getId().toString(), pdf.getTitle());
@@ -53,12 +54,12 @@ public class Show {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @GetMapping
-    public ResponseEntity<InputStreamResource> ShowFile(@PathVariable("title") String title, HttpServletRequest request) {
-
+    public ResponseEntity<InputStreamResource> ShowFile(@PathVariable("action") String action,
+                                                        @PathVariable("title") String title,
+                                                        HttpServletRequest request) {
 
         // Spring truncates file format, so adding it back is necessary
         title += ".pdf";
@@ -76,11 +77,11 @@ public class Show {
         // Compares available pages and file pages
         if (type.toString().equals("Regular")) {
             if (student.getPages() + pages < 250) {
-                return constructResponse(student, dbResult);
+                return constructResponse(student, dbResult, action);
             }
         } else if (type.toString().equals("Memorista")) {
             if (student.getPages() + pages < 300) {
-                return constructResponse(student, dbResult);
+                return constructResponse(student, dbResult, action);
             }
         }
 
