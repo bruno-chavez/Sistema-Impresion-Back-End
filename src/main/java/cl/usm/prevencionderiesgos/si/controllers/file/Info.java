@@ -1,6 +1,7 @@
 package cl.usm.prevencionderiesgos.si.controllers.file;
 
-import cl.usm.prevencionderiesgos.si.DTOs.SendTitlesResponse;
+import cl.usm.prevencionderiesgos.si.DTOs.DocumentInfo;
+import cl.usm.prevencionderiesgos.si.DTOs.Documents;
 import cl.usm.prevencionderiesgos.si.models.PDF;
 import cl.usm.prevencionderiesgos.si.models.Student;
 import cl.usm.prevencionderiesgos.si.repositories.PDFRepository;
@@ -14,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/file/titles")
-public class Titles {
+@RequestMapping("/file/info")
+public class Info {
 
     private final PDFRepository pdfRepository;
     private final StudentRepository studentRepository;
 
 
-    Titles(PDFRepository pdfRepository, StudentRepository studentRepository) {
+    Info(PDFRepository pdfRepository, StudentRepository studentRepository) {
         this.pdfRepository = pdfRepository;
         this.studentRepository = studentRepository;
 
@@ -29,7 +30,7 @@ public class Titles {
 
     @GetMapping
     @ResponseBody
-    public SendTitlesResponse SendTitles(HttpServletRequest request) {
+    public Documents SendTitles(HttpServletRequest request) {
 
         // Gets current session
         HttpSession session = request.getSession();
@@ -42,12 +43,12 @@ public class Titles {
         List<PDF> pdfs = pdfRepository.findByStudentId(student.getId());
 
         // Iterates over the list to get all the titles and appends them to a list
-        List<String> titles = new ArrayList<>();
+        List<DocumentInfo> documents = new ArrayList<>();
 
         for (PDF pdf : pdfs) {
-            titles.add(pdf.getTitle());
+            documents.add(new DocumentInfo(pdf.getTitle(), pdf.getPages()));
         }
 
-        return new SendTitlesResponse(titles);
+        return new Documents(documents);
     }
 }
