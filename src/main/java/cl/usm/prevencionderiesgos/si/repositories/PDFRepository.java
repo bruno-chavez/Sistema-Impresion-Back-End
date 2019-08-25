@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface PDFRepository extends CrudRepository<PDF, Long> {
     List<PDF> findByStudentId(Integer id);
+    PDF findByTitle(String title);
     PDF findByTitleAndStudentId(String title, Integer id);
 }

@@ -71,17 +71,17 @@ public class Show {
 
         // Searches student and pdf
         Student student = studentRepository.findByEmail(email.toString());
-        PDF dbResult = pdfRepository.findByTitleAndStudentId(title, student.getId());
-        int pages = dbResult.getPages();
+        PDF doc = pdfRepository.findByTitleAndStudentId(title, student.getId());
+        int pages = doc.getPages();
 
         // Compares available pages and file pages
         if (type.toString().equals("Regular")) {
             if (student.getPages() + pages < 250) {
-                return constructResponse(student, dbResult, action);
+                return constructResponse(student, doc, action);
             }
         } else if (type.toString().equals("Memorista")) {
             if (student.getPages() + pages < 300) {
-                return constructResponse(student, dbResult, action);
+                return constructResponse(student, doc, action);
             }
         }
 
