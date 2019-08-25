@@ -37,9 +37,6 @@ public class DeleteFile {
     @ResponseBody
     public ResponseEntity<Message> DeleteDoc(@PathVariable("title") String title, HttpServletRequest request) {
 
-        // Spring truncates file format, so adding it back is necessary
-        title += ".pdf";
-
         // Gets current session
         HttpSession session = request.getSession();
         Object email = session.getAttribute("student-email");

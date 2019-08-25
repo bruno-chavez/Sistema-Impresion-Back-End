@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
@@ -31,6 +32,11 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .allowedOrigins("http://localhost:8081", "http://localhost:8082")
                 .allowedMethods("GET", "POST", "DELETE")
                 .allowCredentials(true);
+    }
+
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer.setUseSuffixPatternMatch(false);
     }
 
     @Bean
