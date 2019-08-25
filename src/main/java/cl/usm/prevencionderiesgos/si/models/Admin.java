@@ -14,6 +14,7 @@ public class Admin {
     private String email;
     private String password;
 
+
     public Integer getId() {
         return id;
     }

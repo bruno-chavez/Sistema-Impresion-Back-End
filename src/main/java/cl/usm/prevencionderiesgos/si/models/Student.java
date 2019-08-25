@@ -18,6 +18,7 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private StudentType type;
 
+
     public Integer getId() {
         return id;
     }
