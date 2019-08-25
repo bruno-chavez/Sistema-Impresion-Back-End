@@ -1,7 +1,5 @@
 package cl.usm.prevencionderiesgos.si.models;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +14,7 @@ public class PDF {
     private String title;
     private Integer pages;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn
     private Student student;
 
