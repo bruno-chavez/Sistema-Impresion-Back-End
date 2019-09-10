@@ -1,6 +1,9 @@
 package cl.usm.prevencionderiesgos.si.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class PDF {
@@ -13,6 +16,9 @@ public class PDF {
 
     private String title;
     private Integer pages;
+
+    @CreationTimestamp
+    private Date created_at;
 
     @ManyToOne()
     @JoinColumn
@@ -38,4 +44,8 @@ public class PDF {
     public Integer getPages() { return pages; }
 
     public void setPages(Integer pages) { this.pages = pages; }
+
+    public Date getCreated_at() { return created_at; }
+
+    public void setCreated_at(Date created_at) { this.created_at = created_at; }
 }

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +48,22 @@ public class Info {
         // Iterates over the list to get all the titles and appends them to a list
         List<DocumentInfo> documents = new ArrayList<>();
 
+        LocalDate lastYear = LocalDate.now().minusYears(1);
+
+        // Compares times between creation date and last year if the difference is less than a year the pdf gets deleted
         for (PDF pdf : pdfs) {
+            LocalDate creationDate = pdf.getCreated_at().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            Period period = Period.between(lastYear, creationDate);
+            int diff = period.getYears();
+            System.out.println(diff);
+            if (diff < 1) {
+                pdfRepository.delete(pdf);
+                continue;
+            }
+
             documents.add(new DocumentInfo(pdf.getTitle(), pdf.getPages()));
         }
+
 
         return new Documents(documents);
     }
