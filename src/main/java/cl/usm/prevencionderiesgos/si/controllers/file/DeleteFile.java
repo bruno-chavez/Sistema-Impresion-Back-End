@@ -1,15 +1,12 @@
 package cl.usm.prevencionderiesgos.si.controllers.file;
 
 
-import cl.usm.prevencionderiesgos.si.DTOs.DocumentInfo;
 import cl.usm.prevencionderiesgos.si.DTOs.Message;
-import cl.usm.prevencionderiesgos.si.DTOs.Pages;
 import cl.usm.prevencionderiesgos.si.models.PDF;
 import cl.usm.prevencionderiesgos.si.models.Student;
 import cl.usm.prevencionderiesgos.si.repositories.PDFRepository;
 import cl.usm.prevencionderiesgos.si.repositories.StudentRepository;
 
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +49,9 @@ public class DeleteFile {
         File f = new File(filePath);
 
         if (f.delete()) {
+            student.setDocs(student.getDocs()-1);
+            studentRepository.save(student);
+
             PDF pdf = pdfRepository.findByTitle(title);
             pdfRepository.delete(pdf);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(new Message("file deleted"));

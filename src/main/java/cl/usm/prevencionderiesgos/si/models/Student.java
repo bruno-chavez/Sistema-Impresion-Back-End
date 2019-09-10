@@ -11,6 +11,7 @@ public class Student {
     private String name;
     private String password;
     private Integer pages;
+    private Integer docs;
 
     @Column(unique = true)
     private String email;
@@ -66,4 +67,8 @@ public class Student {
     public void setPages(Integer pages) {
         this.pages = pages;
     }
+
+    public Integer getDocs() { return docs; }
+
+    public void setDocs(Integer docs) { this.docs = docs; }
 }

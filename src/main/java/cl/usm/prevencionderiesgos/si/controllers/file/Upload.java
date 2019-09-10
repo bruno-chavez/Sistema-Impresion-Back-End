@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -44,10 +45,16 @@ public class Upload {
 
         Student student = studentRepository.findByEmail(email.toString());
 
+        // Checks if a user has 10 or more docs
+        if (student.getDocs() >= 10) {
+            return new Message("Too many files for a sinlge user");
+        }
+
         // Check if the file was previously added by the student
         if (pdfRepository.findByTitleAndStudentId(file.getOriginalFilename(), student.getId()) != null) {
             return new Message("File with same name already uploaded");
         }
+
 
         // Creates the filePath for the new file in files/user-id/file-name
         String filePath = String.join("/", "files", student.getId().toString());
@@ -64,6 +71,10 @@ public class Upload {
             try (FileOutputStream fileStream = new FileOutputStream(filePath)) {
                 fileStream.write(file.getBytes());
             }
+
+            // Adds one to the doc tracker of a user
+            student.setDocs(student.getDocs()+1);
+            studentRepository.save(student);
 
             // Loads the created file to look up total pages
             PDDocument doc = PDDocument.load(new File(filePath));

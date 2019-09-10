@@ -30,6 +30,7 @@ public class RegisterUsers {
         // Hashes and salts student's password
         student.setPassword(passwordEncoder.encode(student.getPassword()));
         student.setPages(0);
+        student.setDocs(0);
 
         // Saves student to the DB
         repository.save(student);

@@ -1,6 +1,6 @@
 package cl.usm.prevencionderiesgos.si.controllers.student;
 
-import cl.usm.prevencionderiesgos.si.DTOs.Pages;
+import cl.usm.prevencionderiesgos.si.DTOs.StudentPagesDocs;
 import cl.usm.prevencionderiesgos.si.models.Student;
 import cl.usm.prevencionderiesgos.si.repositories.StudentRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,17 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/student/pages")
-public class CurrentPages {
+@RequestMapping("/student/info")
+public class StudentInfo {
     private final StudentRepository repository;
 
-    CurrentPages(StudentRepository repository) {
+    StudentInfo(StudentRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping
     @ResponseBody
-    public Pages GetPages(HttpServletRequest request){
+    public StudentPagesDocs GetInfo(HttpServletRequest request){
 
         HttpSession session = request.getSession();
         Object email = session.getAttribute("student-email");
@@ -38,6 +38,6 @@ public class CurrentPages {
         }
 
 
-        return new Pages(pages);
+        return new StudentPagesDocs(pages, student.getDocs());
     }
 }
