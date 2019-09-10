@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Students {
 
-    private List<StudentInfo> students;
+    private List<StudentNameEmail> students;
 
-    public Students(List<StudentInfo> students) { this.students = students; }
+    public Students(List<StudentNameEmail> students) { this.students = students; }
 
-    public List<StudentInfo> getStudents() { return students; }
+    public List<StudentNameEmail> getStudents() { return students; }
 }

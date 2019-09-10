@@ -1,11 +1,11 @@
 package cl.usm.prevencionderiesgos.si.DTOs;
 
-public class StudentInfo {
+public class StudentNameEmail {
 
     private String name;
     private String email;
 
-    public StudentInfo(String name, String email) {
+    public StudentNameEmail(String name, String email) {
         this.name = name;
         this.email = email;
     }
