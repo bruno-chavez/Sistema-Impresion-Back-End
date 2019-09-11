@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -50,21 +51,27 @@ public class Info {
 
         LocalDate lastYear = LocalDate.now().minusYears(1);
 
-        // Compares times between creation date and last year if the difference is less than a year the pdf gets deleted
         for (PDF pdf : pdfs) {
+            // Compares times between creation date and last year
+            // if the difference is less than a year the pdf gets deleted
+
             LocalDate creationDate = pdf.getCreated_at().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             Period period = Period.between(lastYear, creationDate);
             int diff = period.getYears();
-            System.out.println(diff);
             if (diff < 1) {
-                pdfRepository.delete(pdf);
-                continue;
-            }
+                String filePath = String.join("/",
+                        "files",
+                        student.getId().toString(),
+                        pdf.getTitle());
 
+                File f = new File(filePath);
+                if (f.delete()) {
+                    pdfRepository.delete(pdf);
+                    continue;
+                }
+            }
             documents.add(new DocumentInfo(pdf.getTitle(), pdf.getPages()));
         }
-
-
         return new Documents(documents);
     }
 }
